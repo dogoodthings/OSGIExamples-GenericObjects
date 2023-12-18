@@ -1,2 +1,2 @@
 # OSGIExamples-GenericObjects
-generic objects via osgi
+generic objects via osgi example for jira integration
