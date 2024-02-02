@@ -1,0 +1,19 @@
+#configure new search provider "JIRA"
+plm.search.provider.JIRA = org.dogoodthings.ectr.genericObjects.jira.JiraSearchProvider
+
+#add jira search provider to list of quick search providers
+plm.search.provider.types = @plm.search.provider.types@;JIRA
+
+
+
+#smart container "related jira issues"
+#searches for the material number across jira issues
+
+plm.smart.container.RELATED_JIRA_ISSUES.name     = Related jira issues
+plm.smart.container.RELATED_JIRA_ISSUES.macro    = generic_TransformObjectServiceContainer_macro.txt
+plm.smart.container.RELATED_JIRA_ISSUES.icon     = {0}/sap/status_inactive
+plm.smart.container.RELATED_JIRA_ISSUES.params.0 = dogoodthings.JiraByNumber
+
+plm.om.MAT.containers =@plm.om.MAT.containers@;SMART_CONT(RELATED_JIRA_ISSUES)
+
+om.obr.url.ID.GEN_JIRA.KEY = @org.dogoodthings.ectr.genericObjects.jira.baseUrl@/browse/$(KEY)

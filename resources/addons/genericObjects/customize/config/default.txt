@@ -1,0 +1,5 @@
+#base jira url
+org.dogoodthings.ectr.genericObjects.jira.baseUrl=https://<your jira base url>
+
+#personal access token. get it from jira in your jira profile.
+org.dogoodthings.ectr.genericObjects.jira.token=<your jira personal access token>

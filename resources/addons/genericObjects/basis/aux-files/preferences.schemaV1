@@ -1,0 +1,15 @@
+{
+   "namespace" : "org.dogoodthings.ectr.genericObjects",
+   "preferences" : [
+      {
+         "name" : "jira.token",
+         "type" : "string",
+         "description" : "jira bearer token"
+      },
+      {
+         "name" : "jira.baseUrl",
+         "type" : "string",
+         "description" : "jira base url"
+      }
+   ]
+}

@@ -12,8 +12,7 @@ public class ServiceTool {
 
   public <T> T getService(Class<T> clazz) throws Exception {
     ServiceReference<T> serviceRef = context.getServiceReference(clazz);
-    if (serviceRef != null)
-      return context.getService(serviceRef);
+    if (serviceRef != null) return context.getService(serviceRef);
     throw new Exception("Unable to find implementation for service " + clazz.getName());
   }
 }
