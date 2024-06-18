@@ -1,1 +1,0 @@
-put the ja OSGI-Examples-GenericObjects-jira*.jar in this directory

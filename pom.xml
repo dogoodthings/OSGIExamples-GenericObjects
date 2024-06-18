@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.dogoodthings.ectr</groupId>
@@ -16,9 +15,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <ectr.installation.directory>/mnt/c/Program Files/SAP/ECTR/SVN/ECTR-S4-12</ectr.installation.directory>
+        <ectr.install.dir>C:\Program Files\SAP\ECTR\SVN\ECTR-S4-12</ectr.install.dir>
+        <!-- <ectr.install.dir>/mnt/c/Program Files/SAP/ECTR/SVN/ECTR-S4-12</ectr.install.dir> -->
+        <ectr.addon.name>jira-integration</ectr.addon.name>
+        <path.to.dist.folder>dist</path.to.dist.folder>
         <bundle.activator>org.dogoodthings.ectr.genericObjects.jira.Activator</bundle.activator>
-        <bundle.import-packages></bundle.import-packages>
     </properties>
 
     <dependencies>
@@ -30,11 +31,18 @@
         </dependency>
 
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.32</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.dscsag</groupId>
             <artifactId>plm-api</artifactId>
             <scope>system</scope>
             <version>5.2.10</version>
-            <systemPath>${ectr.installation.directory}/basis/classes/plm-api.jar</systemPath>
+            <systemPath>${ectr.install.dir}/basis/classes/plm-api.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -47,6 +55,18 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <release>21</release>
+                    <source>21</source>
+                    <target>21</target>
+                </configuration>
+            </plugin>
+
+            <!-- OSGi bundling -->
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
@@ -69,20 +89,109 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <unpackBundle>true</unpackBundle>
+                    <niceManifest>true</niceManifest>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                    </archive>
+
                     <instructions>
                         <_noee>true</_noee>
-                        <_consumer-policy>$${range;[===,+)}</_consumer-policy>
+                        <_consumer-policy>$${range;[==,+]}</_consumer-policy>
                         <Bundle-Activator>${bundle.activator}</Bundle-Activator>
-                        <Bundle-SymbolicName>${project.groupId}.${project.artifactId};singleton:=true
+                        <Bundle-SymbolicName>
+                            ${project.groupId}.${project.artifactId};singleton:=true
                         </Bundle-SymbolicName>
-                        <Export-Package></Export-Package>
-                        <Embed-Dependency>
-                            *;scope=compile|runtime;inline=false;artifactId=!plm-api
-                        </Embed-Dependency>
-                        <Embed-Directory>OSGI-INF/lib</Embed-Directory>
+                        <Export-Package />
+                        <Include-Resource><!-- include resources automatically -->
+                        </Include-Resource>
+                        <Embed-Dependency>gson</Embed-Dependency>
+                        <_dsannotations-options>norequirements,nocapabilities</_dsannotations-options>
                     </instructions>
                 </configuration>
             </plugin>
+
+            <!-- Create a distribution file
+           Note: The additional files (e.g. default.txt) need to be located under src/main/resources -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/assembly/mavenAssemblyDescriptor.xml</descriptor>
+                    </descriptors>
+                    <outputDirectory>${path.to.dist.folder}</outputDirectory>
+                    <!-- Omit the assembly ID in the final filename -->
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>create-archive</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Copy the compiled Jar file directly to ECTR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.6.1</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <artifactItems>
+                        <artifactItem>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>${project.artifactId}</artifactId>
+                            <version>${project.version}</version>
+                            <type>jar</type>
+                            <overWrite>true</overWrite>
+                            <outputDirectory>
+                                ${ectr.install.dir}/addons/${ectr.addon.name}/basis/plugins
+                            </outputDirectory>
+                        </artifactItem>
+                    </artifactItems>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
+                    <overWriteReleases>false</overWriteReleases>
+                    <overWriteSnapshots>true</overWriteSnapshots>
+                </configuration>
+            </plugin>
+
+            <!-- Copy the resources directly to ECTR -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${ectr.install.dir}/addons/${ectr.addon.name}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 </project>
