@@ -1,6 +1,6 @@
 # OSGIExamples-GenericObjects
 
-This example contains two aspects:
+This example contains three aspects:
 
 1. Enhancing ECTRs QuickSearch with own implementation (JiraSearchProvider implements SearchProvider)
 2. Implementation of own generic objects using OSGI (JiraGenericObjectsFactory implements
