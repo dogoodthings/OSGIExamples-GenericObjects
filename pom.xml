@@ -14,8 +14,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <ectr.installation.directory>/mnt/c/Program Files/SAP/ECTR/SVN/ECTR-S4-12</ectr.installation.directory>
         <bundle.activator>org.dogoodthings.ectr.genericObjects.jira.Activator</bundle.activator>
         <bundle.import-packages></bundle.import-packages>
