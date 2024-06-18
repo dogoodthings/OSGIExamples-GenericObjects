@@ -69,26 +69,6 @@ public class JiraGenericObjectsFactory implements PluginGenericTypeConfiguration
   }
 
   private class JiraHandler implements PluginGenericTypeHandler {
-    @Override
-    public OriginInfo getOriginInfo() {
-      log("getOriginInfo()");
-      return new OriginInfo() {
-        @Override
-        public String getId() {
-          return "4711";
-        }
-
-        @Override
-        public String getName() {
-          return "Main JIRA";
-        }
-
-        @Override
-        public String getDescription() {
-          return "Main JIRA System";
-        }
-      };
-    }
 
     @Override
     public ObjectSpecificationProvider getFieldSpecificationProvider() {
