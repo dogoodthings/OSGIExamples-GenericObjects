@@ -14,11 +14,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class JiraSearchTool {
-  private final ServiceTool serviceTool;
   private final JiraConfiguration jiraConfiguration;
 
   public JiraSearchTool(ServiceTool serviceTool) {
-    this.serviceTool = serviceTool;
     jiraConfiguration = new JiraConfiguration(serviceTool);
   }
 

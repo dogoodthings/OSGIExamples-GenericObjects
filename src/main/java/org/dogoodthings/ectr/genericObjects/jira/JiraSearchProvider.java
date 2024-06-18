@@ -11,11 +11,9 @@ import java.util.stream.Collectors;
 
 public class JiraSearchProvider implements SearchProvider {
   private final ServiceTool serviceTool;
-  private final JiraConfiguration jiraConfiguration;
 
   public JiraSearchProvider(ServiceTool serviceTool) {
     this.serviceTool = serviceTool;
-    jiraConfiguration = new JiraConfiguration(serviceTool);
   }
 
 

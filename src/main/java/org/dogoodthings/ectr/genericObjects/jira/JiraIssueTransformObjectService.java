@@ -11,11 +11,9 @@ import java.util.stream.Collectors;
 public class JiraIssueTransformObjectService implements TransformObjectService {
 
   private final ServiceTool serviceTool;
-  private final JiraConfiguration jiraConfiguration;
 
   public JiraIssueTransformObjectService(ServiceTool serviceTool) {
     this.serviceTool = serviceTool;
-    jiraConfiguration = new JiraConfiguration(serviceTool);
   }
 
   @Override
