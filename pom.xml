@@ -16,7 +16,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <ectr.installation.directory>C:\Program Files (x86)\SAP\ECTRS4</ectr.installation.directory>
+        <ectr.installation.directory>/mnt/c/Program Files/SAP/ECTR/SVN/ECTR-S4-12</ectr.installation.directory>
         <bundle.activator>org.dogoodthings.ectr.genericObjects.jira.Activator</bundle.activator>
         <bundle.import-packages></bundle.import-packages>
     </properties>
@@ -33,6 +33,7 @@
             <groupId>com.dscsag</groupId>
             <artifactId>plm-api</artifactId>
             <scope>system</scope>
+            <version>5.2.10</version>
             <systemPath>${ectr.installation.directory}/basis/classes/plm-api.jar</systemPath>
         </dependency>
 
