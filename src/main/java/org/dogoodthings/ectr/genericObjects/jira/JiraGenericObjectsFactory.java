@@ -89,30 +89,6 @@ public class JiraGenericObjectsFactory implements PluginGenericTypeConfiguration
             return new JiraDataProvider();
         }
 
-        @Override
-        public OriginInfo getOriginInfo() {
-            return new OriginInfo() {
-                @Override
-                public String getId() {
-                    return getOriginName();
-                }
-
-                @Override
-                public String getName() {
-                    return getOriginName();
-                }
-
-                @Override
-                public String getDescription() {
-                    return getOriginName();
-                }
-            };
-        }
-
-        private String getOriginName() {
-            return "Jira Testing Plugin";
-        }
-
         private class JiraDataProvider implements BasicDetailsProvider {
 
             private final Map<String, Function<JiraIssue, Object>> fieldMapper;
