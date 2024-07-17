@@ -3,6 +3,7 @@
 ## Scope
 
 This repository demonstrates the implementation of OSGi-based generic objects for ECTR by using the example of a Jira integration.
+You need at least ECTR version S4 1.2.1.0 to get the example code to work.
 
 The implementation consists of three parts:
 
