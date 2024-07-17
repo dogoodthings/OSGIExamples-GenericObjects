@@ -2,12 +2,11 @@
 
 ## Scope
 
-This repository demonstrates the implementation of OSGi-based generic objects for ECTR by 
-using the example of a Jira integration.
+This repository demonstrates the implementation of OSGi-based generic objects for ECTR by using the example of a Jira integration.
 
 The implementation consists of three parts:
 
-1. Integrate Jira issues as first-level objects in ECTR that can be added to ECTR folders.
+1. Integrate Jira issues as first-level objects in ECTR that can be added to ECTR folders and display the issue ID as URL to jump to the Jira issue using the web browser.
 1. Add a search provider for Jira issues that integrates with the ECTR Quick Search (shortcut `Ctrl-F`).
 1. Add a Smart Container "Related Jira issues" under Material Master ECTR objects that lists all Jira issues where the issue description/text contains the material number.
 
