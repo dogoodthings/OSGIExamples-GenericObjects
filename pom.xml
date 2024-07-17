@@ -19,14 +19,20 @@
         <!-- <ectr.install.dir>/mnt/c/Program Files/SAP/ECTR/SVN/ECTR-S4-12</ectr.install.dir> -->
         <ectr.addon.name>jira-integration</ectr.addon.name>
         <path.to.dist.folder>dist</path.to.dist.folder>
-        <bundle.activator>org.dogoodthings.ectr.genericObjects.jira.Activator</bundle.activator>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
-            <version>6.0.0</version>
+            <artifactId>osgi.core</artifactId>
+            <version>8.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.component.annotations</artifactId>
+            <version>1.5.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -98,10 +104,13 @@
                     <instructions>
                         <_noee>true</_noee>
                         <_consumer-policy>$${range;[==,+]}</_consumer-policy>
-                        <Bundle-Activator>${bundle.activator}</Bundle-Activator>
                         <Bundle-SymbolicName>
                             ${project.groupId}.${project.artifactId};singleton:=true
                         </Bundle-SymbolicName>
+                        <Import-Package>
+                            <!-- the following entries are required even though they 
+                                cause maven warnings during the build -->
+                            com.dscsag.plm.spi.interfaces.*</Import-Package>
                         <Export-Package />
                         <Include-Resource><!-- include resources automatically -->
                         </Include-Resource>
