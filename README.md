@@ -1,26 +1,31 @@
 # OSGIExamples-GenericObjects
 
-This example contains three aspects:
+## Scope
 
-1. Enhancing ECTRs QuickSearch with own implementation (JiraSearchProvider implements SearchProvider)
-2. Implementation of own generic objects using OSGI (JiraGenericObjectsFactory implements
-   PluginGenericTypeConfigurationFactory)
-3. Smart Container which using own implementation (JiraIssueTransformObjectService implements TransformObjectService)
+This repository demonstrates the implementation of OSGi-based generic objects for ECTR by using the example of a Jira integration.
 
-copy directory "addons" found in "resources" into <ECTR_INSTDIR>
-(or, which is basically the same, copy directory "genericObjects" found in "resources\addons" into <ECTR_INSTDIR>
-\addons )
-put the compiled jar into <ECTR_INSTDIR>\addons\genericObjects\basis\plugins
-edit the file <ECTR_INSTDIR>\addons\genericObjects\customize\defaults.txt
-and set the values for token and baseUrl.
-The token is "personal access token" which you can create in jira.
+The implementation consists of three parts:
 
-(!) If you are using "backend config" then you have to put the file
-<ECTR_INSTDIR>\addons\genericObjects\customize\defaults.txt into backend config directory
+1. Integrate Jira issues as first-level objects in ECTR that can be added to ECTR folders and display the issue ID as URL to jump to the Jira issue using the web browser.
+1. Add a search provider for Jira issues that integrates with the ECTR Quick Search (shortcut `Ctrl-F`).
+1. Add a Smart Container "Related Jira issues" under Material Master ECTR objects that lists all Jira issues where the issue description/text contains the material number.
 
-Start ECTR, press ctrl-f, search for jira issues using Quick Search.
+## Development setup
 
-Additionally, materials wiil habe a new Smart Container "related jira issues"
-This container lists all jira issues where the text contains the material number
+1. Adjust the [pom.xml](pom.xml): Maintain `ectr.install.dir` property such that it points to the ECTR installation directory.
 
+1. Adjust the [default.txt](src/main/resources/customize/config/default.txt):
 
+    1. In your Jira instance, create a __personal access token__, see [Atlassian Support: Using Personal Access Tokens](https://confluence.atlassian.com/enterprise/using-personal-access-tokens-1026032365.html).
+    1. Use your personal access token as the value for preference `org.dogoodthings.ectr.genericObjects.jira.token`.
+    1. Maintain preference `org.dogoodthings.ectr.genericObjects.jira.baseUrl`, e.g. `https://jira.mycompany.com`.
+
+         __Note__: __Omit__ a trailing slash in the URL.
+
+1. Build the project:
+
+    ```shell
+    mvn clean compile package
+    ```
+
+   This will automatically create an addon folder `jira-integration` in the ECTR installation directory under `addons`. If the build succeeds, the addon is ready to be used (ECTR needs to be restarted).

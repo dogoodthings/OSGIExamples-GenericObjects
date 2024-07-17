@@ -1,0 +1,23 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+    <id>zip</id>
+    <!-- Omit a folder within the zip-file that is named like the artifact -->
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <fileSets>
+        <fileSet>
+            <directory>${project.build.directory}</directory>
+            <outputDirectory>ECTR/addons/${ectr.addon.name}/basis/plugins</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources</directory>
+            <outputDirectory>ECTR/addons/${ectr.addon.name}</outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>
