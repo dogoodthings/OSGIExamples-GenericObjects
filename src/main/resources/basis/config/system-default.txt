@@ -29,5 +29,5 @@ plm.om.GEN_JIRA.containers =@plm.om.GEN_JIRA.containers@;SMART_CONT(LINKED_JIRA_
 
 
 om.obr.url.ID.GEN_JIRA.KEY = @org.dogoodthings.ectr.genericObjects.jira.baseUrl@/browse/$(KEY)
-om.obr.url.ID.GEN_JIRA.ASSIGNEE-EMAIL = mailto:$(ASSIGNEE-EMAIL)
-om.obr.url.ID.GEN_JIRA.ASSIGNEE = mailto:$(ASSIGNEE-EMAIL)
+om.obr.url.ID.GEN_JIRA.ASSIGNEE-EMAIL = mailto:$(ASSIGNEE-EMAIL)?subject=$(KEY)
+om.obr.url.ID.GEN_JIRA.ASSIGNEE = mailto:$(ASSIGNEE-EMAIL)?subject=$(KEY)
