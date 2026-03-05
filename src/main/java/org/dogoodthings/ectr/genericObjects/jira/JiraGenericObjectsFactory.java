@@ -15,7 +15,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.dogoodthings.ectr.genericObjects.jira.model.JiraIssue;
-import org.eclipse.jdt.annotation.NonNull;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -102,7 +101,7 @@ import com.google.gson.Gson;
       }
 
       //override omitted to be "silently" compatible with plm-api 5.2.10.0
-      public @NonNull Set<String> getSupportedFeatures()
+      public Set<String> getSupportedFeatures()
       {
         return Set.of("PREVIEW");
       }

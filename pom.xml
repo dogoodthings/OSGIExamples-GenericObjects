@@ -13,8 +13,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.release>17</maven.compiler.release>
+
         <ectr.install.dir>C:\Program Files\SAP\ECTR\SVN\ECTR-S4-12</ectr.install.dir>
         <!-- <ectr.install.dir>/mnt/c/Program Files/SAP/ECTR/SVN/ECTR-S4-12</ectr.install.dir> -->
         <ectr.addon.name>jira-integration</ectr.addon.name>
@@ -65,35 +65,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
-                <configuration>
-                    <release>17</release>
-                    <source>17</source>
-                    <target>17</target>
-                </configuration>
             </plugin>
 
             <!-- OSGi bundling -->
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
-                <version>5.1.9</version>
+                <version>6.0.0</version>
                 <extensions>true</extensions>
-                <executions>
-                    <execution>
-                        <id>bundle-manifest</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>manifest</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>create-bundle</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>bundle</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <unpackBundle>true</unpackBundle>
                     <niceManifest>true</niceManifest>
@@ -103,6 +82,8 @@
 
                     <instructions>
                         <_noee>true</_noee>
+                        <_dsannotations-options>norequirements,nocapabilities</_dsannotations-options>
+
                         <_consumer-policy>$${range;[==,+]}</_consumer-policy>
                         <Bundle-SymbolicName>
                             ${project.groupId}.${project.artifactId};singleton:=true
@@ -114,8 +95,10 @@
                         <Export-Package />
                         <Include-Resource><!-- include resources automatically -->
                         </Include-Resource>
-                        <Embed-Dependency>gson</Embed-Dependency>
-                        <_dsannotations-options>norequirements,nocapabilities</_dsannotations-options>
+
+                        <Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency>
+                        <Embed-Directory>lib</Embed-Directory>
+                        <Embed-Transitive>true</Embed-Transitive>
                     </instructions>
                 </configuration>
             </plugin>
@@ -202,5 +185,14 @@
             </plugin>
 
         </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>**/*</exclude>
+                </excludes>
+            </resource>
+        </resources>
     </build>
 </project>
